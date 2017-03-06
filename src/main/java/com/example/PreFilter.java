@@ -20,7 +20,7 @@ public class PreFilter extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
-            System.err.println("Usage: PreFilter <input patch> <output patch>");
+            System.err.println("Usage: PreFilter <input path> <output path>");
             System.exit(1);
         }
         int res = ToolRunner.run(new Configuration(), new PreFilter(), args);
