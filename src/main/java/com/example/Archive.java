@@ -14,29 +14,29 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
- * Created by igor on 03.03.17.
+ * Created by igor on 06.03.17.
  */
-public class PreFilter extends Configured implements Tool {
+public class Archive extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
-            System.err.println("Usage: PreFilter <input path> <output path>");
+            System.err.println("Usage: Archive <input path> <output path>");
             System.exit(1);
         }
-        int res = ToolRunner.run(new Configuration(), new PreFilter(), args);
+        int res = ToolRunner.run(new Configuration(), new Archive(), args);
         System.exit(res);
     }
 
     public int run(String[] args) throws Exception {
         Job job = Job.getInstance(getConf());
-        job.setJarByClass(PreFilter.class);
-        job.setJobName("PreFilter");
+        job.setJarByClass(Archive.class);
+        job.setJobName("Archive");
 
-        job.setMapperClass(PreFilterMapper.class);
+        job.setMapperClass(ArchiveMapper.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
 
-        job.setReducerClass(PreFilterReducer.class);
+        job.setReducerClass(ArchiveReducer.class);
         job.setOutputKeyClass(NullWritable.class);
         job.setOutputValueClass(Text.class);
 

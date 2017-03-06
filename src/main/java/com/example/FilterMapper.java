@@ -21,22 +21,20 @@ import java.util.Set;
 /**
  * Created by igor on 03.03.17.
  */
-public class PreFilterMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class FilterMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
 
     private final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     private final Set<String> permittedTypes = new HashSet<String>(Arrays.asList("pay", "rec"));
 
-    private String date = null;
-
     @Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         if (validate(value.toString())) {
-            context.write(new Text(date), value);
+            context.write(key, value);
         }
     }
 
-    public boolean validate(String line) {
+    protected boolean validate(String line) {
         try {
             Reader in = new StringReader(line);
             CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT);
@@ -57,7 +55,6 @@ public class PreFilterMapper extends Mapper<LongWritable, Text, Text, Text> {
             }
             double value = Double.parseDouble(record.get(2));
             DateTime business_date = fmt.parseDateTime(record.get(3));
-            date = record.get(3);
             return true;
         } catch (Exception e) {
             return false;
