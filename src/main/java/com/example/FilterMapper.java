@@ -53,7 +53,7 @@ public class FilterMapper extends Mapper<LongWritable, Text, LongWritable, Text>
             if (!permittedTypes.contains(record.get(1).toLowerCase())) {
                 return false;
             }
-            int value = Integer.parseInt(record.get(2));
+            int value = Integer.parseInt(record.get(2).trim());
             DateTime business_date = fmt.parseDateTime(record.get(3));
             return true;
         } catch (Exception e) {
