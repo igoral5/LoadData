@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class ArchiveReducer extends Reducer<Text, Text, NullWritable, Text> {
 
-    private MultipleOutputs multipleOutputs;
+    private MultipleOutputs<NullWritable, Text> multipleOutputs;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
